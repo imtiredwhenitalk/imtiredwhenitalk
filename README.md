@@ -1,7 +1,7 @@
 Hi 👋 My name is Peter Parker
 =============================
 
-Web Developer
+Junior Full-Stack Developer 
 -------------
 
 * 🌍  I'm based in London, England
