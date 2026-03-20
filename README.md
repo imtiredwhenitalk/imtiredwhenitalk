@@ -31,7 +31,8 @@ My goal is not just to make things work, but to write clean, maintainable code a
 - Fast learner, quick to adapt to new technologies
 - Persistent and result-oriented in solving complex tasks
 - Product mindset: I focus on the whole system, not just isolated code
-- Balance between development speed and code quality ## What I Can Grow Into
+- Balance between development speed and code quality
+## What I Can Grow Into
 - Building production-ready full-stack applications
 - Designing scalable architectures for larger systems
 - Advancing in testing and software quality practices
