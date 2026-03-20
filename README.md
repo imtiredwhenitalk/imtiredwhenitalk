@@ -9,7 +9,7 @@ I am an aspiring full-stack developer focused on building real, usable products 
 My goal is not just to make things work, but to write clean, maintainable code and create solutions that can scale.
 
 * 🌍  I'm based in Ukraine , Lutsk
-* 🖥️  See my portfolio at [imtiredwhenitalk.com](http://imtiredwhenitalk.github.io)
+* 🖥️  See my portfolio at [imtiredwhenitalk.com](http://imtiredwhenitalk.github.io/portfolio)
 * ✉️  You can contact me at [sashamelnik360@gmail.com](mailto:sashamelnik360@gmail.com)
 * 🧠  I'm currently learning - Python - Node.js - React - TypeScript - Docker
 * 👥  I'm looking to collaborate on interesting project
