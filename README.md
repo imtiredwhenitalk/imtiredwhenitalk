@@ -27,7 +27,8 @@ Junior Full-Stack Developer
 - Core web application design principles
 - Clean code and maintainable project structure 
 - Full-stack development fundamentals
-- Basic DevOps practices for local and test environments ## My Strengths
+- Basic DevOps practices for local and test environments
+## My Strengths
 - Fast learner, quick to adapt to new technologies
 - Persistent and result-oriented in solving complex tasks
 - Product mindset: I focus on the whole system, not just isolated code
