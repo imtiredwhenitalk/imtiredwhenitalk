@@ -4,15 +4,15 @@ Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-912
 Junior Full-Stack Developer
 ---------------------------
 
-I am an aspiring full-stack developer focused on building real, usable products from idea to deployment.
-
-My goal is not just to make things work, but to write clean, maintainable code and create solutions that can scale.
+#I am an aspiring full-stack developer focused on building real, usable products from idea to deployment.
+#My goal is not just to make things work, but to write clean, maintainable code and create solutions that can scale.
 
 * 🌍  I'm based in Ukraine , Lutsk
 * 🖥️  See my portfolio at [imtiredwhenitalk.com](http://imtiredwhenitalk.github.io/portfolio)
 * ✉️  You can contact me at [sashamelnik360@gmail.com](mailto:sashamelnik360@gmail.com)
 * 🧠  I'm currently learning - Python - Node.js - React - TypeScript - Docker
 * 👥  I'm looking to collaborate on interesting project
+* 🎓  I study at [Lutsk National Technical University](https://lntu.edu.ua/en) #Cybersecurity major
 ## What I Can Already Do
 - Build modern frontend interfaces with React and a component-based approach
 - Develop backend services with Node.js and create REST APIs
