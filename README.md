@@ -1,16 +1,13 @@
-## Hi there 👋
+Hi 👋 My name is Peter Parker
+=============================
 
-<!--
-**imtiredwhenitalk/imtiredwhenitalk** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+Web Developer
+-------------
 
-Here are some ideas to get you started:
-
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+* 🌍  I'm based in London, England
+* 🖥️  See my portfolio at [imtiredwhenitalk.com](http://imtiredwhenitalk.github.io)
+* ✉️  You can contact me at [Gmail](mailto:sashamelnik360@gmail.com)
+* 🚀  I'm currently study on [Lutsk National Technical University](https://lntu.edu.ua/en)
+* 🧠  I'm learning React , TypeScript , Python , JavaScript , NodeJS
+* 🤝  I'm open to collaborating on interesting projects
+* ⚡  I moonlight as a super hero
