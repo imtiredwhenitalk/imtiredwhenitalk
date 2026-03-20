@@ -12,7 +12,7 @@ Junior Full-Stack Developer
 * ✉️  You can contact me at [sashamelnik360@gmail.com](mailto:sashamelnik360@gmail.com)
 * 🧠  I'm currently learning - Python - Node.js - React - TypeScript - Docker
 * 👥  I'm looking to collaborate on interesting project
-* 🎓  I study at [Lutsk National Technical University](https://lntu.edu.ua/en) #Cybersecurity major
+* 🎓  I study at [Lutsk National Technical University](https://lntu.edu.ua/en) cybersecurity major
 ## What I Can Already Do
 - Build modern frontend interfaces with React and a component-based approach
 - Develop backend services with Node.js and create REST APIs
