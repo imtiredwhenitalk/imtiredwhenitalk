@@ -5,7 +5,7 @@ Junior Full-Stack Developer
 -------------
 
 * 🌍  I'm based in London, England
-* 🖥️  See my portfolio at [imtiredwhenitalk.com](http://imtiredwhenitalk.github.io)
+* 🖥️  See my portfolio at [imtiredwhenitalk.com](http://imtiredwhenitalk.github.io/portfolio)
 * ✉️  You can contact me at [Gmail](mailto:sashamelnik360@gmail.com)
 * 🚀  I'm currently study on [Lutsk National Technical University](https://lntu.edu.ua/en)
 * 🧠  I'm learning React , TypeScript , Python , JavaScript , NodeJS
