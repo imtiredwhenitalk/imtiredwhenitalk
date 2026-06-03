@@ -5,7 +5,7 @@ Junior Full-Stack Developer
 ---------------------------
 
 * 🌍  I'm based in Ukraine , Lutsk
-* 🖥️  See my portfolio at [imtiredwhenitalk.com](http://imtiredwhenitalk.github.io/portfolio)
+* 🖥️  See my portfolio at [imtiredwhenitalk.com](https://portfolio-five-ashy-c0c81o3zh2.vercel.app/#)
 * ✉️  You can contact me at [sashamelnik360@gmail.com](mailto:sashamelnik360@gmail.com)
 * 🧠  I'm currently learning - Python - Node.js - React - TypeScript - Docker
 * 👥  I'm looking to collaborate on interesting project
