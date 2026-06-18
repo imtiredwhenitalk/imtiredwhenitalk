@@ -1,4 +1,4 @@
-![](https://tenor.com/view/cat-gif-13669436608266942518.gif)
+![](https://tenor.com/view/banner-discord-gif-10601945827130371555.gif)
 
 Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-9127-417c-8b55-ab5a4333674e.gif) My name is Alex
 =============================================================================================================================
