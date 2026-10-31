@@ -22,11 +22,28 @@ OS          : Fedora Linux
 Education   : LNTU (Cybersecurity & Software Engineering)
 Focus       : Full-Stack Web Development, API Security, Automation
 Mindset     : Clean code, scalable architecture, security first
+```
+### /metrics & activity
 
 <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/imtiredwhenitalk/imtiredwhenitalk/blob/output/github-contribution-grid-snake-dark.svg?raw=true">
-    <source media="(prefers-color-scheme: light)" srcset="https://github.com/imtiredwhenitalk/imtiredwhenitalk/blob/output/github-contribution-grid-snake.svg?raw=true">
-    <img alt="github contribution grid snake animation" src="https://github.com/imtiredwhenitalk/imtiredwhenitalk/blob/output/github-contribution-grid-snake.svg?raw=true">
-  </picture>
+  <table>
+    <tr>
+      <td align="center" valign="top">
+        <img height="170" src="https://github-readme-stats.vercel.app/api?username=imtiredwhenitalk&show_icons=true&theme=transparent&hide_border=true&title_color=38bdf8&text_color=8b949e&icon_color=38bdf8&bg_color=00000000" alt="GitHub Stats" />
+      </td>
+      <td align="center" valign="top">
+        <img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=imtiredwhenitalk&layout=compact&theme=transparent&hide_border=true&title_color=38bdf8&text_color=8b949e&bg_color=00000000&langs_count=5" alt="Top Languages" />
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div align="center" style="margin-top: 15px;">
+  <a href="https://github.com/imtiredwhenitalk">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/imtiredwhenitalk/imtiredwhenitalk/blob/output/github-contribution-grid-snake-dark.svg?raw=true">
+      <source media="(prefers-color-scheme: light)" srcset="https://github.com/imtiredwhenitalk/imtiredwhenitalk/blob/output/github-contribution-grid-snake.svg?raw=true">
+      <img alt="GitHub Contribution Snake" src="https://github.com/imtiredwhenitalk/imtiredwhenitalk/blob/output/github-contribution-grid-snake.svg?raw=true" width="100%">
+    </picture>
+  </a>
 </div>
