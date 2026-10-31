@@ -29,10 +29,10 @@ Mindset     : Clean code, scalable architecture, security first
   <table>
     <tr>
       <td align="center" valign="top">
-        <img height="170" src="https://github-readme-stats.vercel.app/api?username=imtiredwhenitalk&show_icons=true&theme=transparent&hide_border=true&title_color=38bdf8&text_color=8b949e&icon_color=38bdf8&bg_color=00000000" alt="GitHub Stats" />
+        <img height="170" src="https://github-readme-stats.anuraghazra1.vercel.app/api?username=imtiredwhenitalk&show_icons=true&theme=transparent&hide_border=true&title_color=38bdf8&text_color=8b949e&icon_color=38bdf8&bg_color=00000000" alt="GitHub Stats" />
       </td>
       <td align="center" valign="top">
-        <img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=imtiredwhenitalk&layout=compact&theme=transparent&hide_border=true&title_color=38bdf8&text_color=8b949e&bg_color=00000000&langs_count=5" alt="Top Languages" />
+        <img height="170" src="https://github-readme-stats.anuraghazra1.vercel.app/api/top-langs/?username=imtiredwhenitalk&layout=compact&theme=transparent&hide_border=true&title_color=38bdf8&text_color=8b949e&bg_color=00000000&langs_count=5" alt="Top Languages" />
       </td>
     </tr>
   </table>
