@@ -18,7 +18,7 @@
 
 ```shell
 $ cat profile.txt
-OS          : Fedora Linux
+OS          : Arch Linux | Windows 11
 Education   : LNTU (Cybersecurity & Software Engineering)
 Focus       : Full-Stack Web Development, API Security, Automation
 Mindset     : Clean code, scalable architecture, security first
