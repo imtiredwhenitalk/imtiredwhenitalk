@@ -6,27 +6,36 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - main
+      - main
+
+permissions:
+  contents: write
+
+concurrency:
+  group: contribution-snake
+  cancel-in-progress: true
 
 jobs:
   generate:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    steps:
-      - name: Generate github-contribution-grid-snake.svg
-        uses: Platane/snk/svg-only@v3
-        with:
-          github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            dist/github-contribution-grid-snake.svg
-            dist/github-contribution-grid-snake-dark.svg?palette=github-dark&color_snake=#38bdf8&color_dots=#161b22,#0e4429,#006d32,#26a641,#39d353
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push to output branch
-        uses: crazy-max/ghaction-github-pages@v3.1.0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          target_branch: output
-          build_dir: dist
+          node-version: 22
+
+      - name: Install Octokit
+        working-directory: .github/snake
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Generate and publish animated snake
+        working-directory: .github/snake
+        run: node generate.mjs
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # A PAT (SNAKE_TOKEN) is only needed if you want private contributions included.
+          GITHUB_TOKEN: ${{ secrets.SNAKE_TOKEN || secrets.GITHUB_TOKEN }}

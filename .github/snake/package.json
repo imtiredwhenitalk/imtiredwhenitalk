@@ -1,0 +1,9 @@
+{
+  "name": "contribution-snake",
+  "private": true,
+  "type": "module",
+  "description": "Animated GitHub contribution snake generator (Octokit + SVG)",
+  "dependencies": {
+    "octokit": "^5.0.5"
+  }
+}
