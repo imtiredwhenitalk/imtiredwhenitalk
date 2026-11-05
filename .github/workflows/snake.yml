@@ -37,5 +37,8 @@ jobs:
         working-directory: .github/snake
         run: node generate.mjs
         env:
+          # All Octokit calls live in .github/snake/generate.mjs:
+          #   octokit.graphql(...)        -> contribution calendar
+          #   octokit.rest.git.*          -> commit to the `output` branch
           # A PAT (SNAKE_TOKEN) is only needed if you want private contributions included.
           GITHUB_TOKEN: ${{ secrets.SNAKE_TOKEN || secrets.GITHUB_TOKEN }}

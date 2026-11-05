@@ -24,9 +24,9 @@ const PITCH = CELL + GAP;
 const ROWS = 7;
 const MARGIN = { top: 36, right: 16, bottom: 16, left: 48 };
 
-const SNAKE_SPEED = 260; // px per second
+const SNAKE_SPEED = 140; // px per second
 const BEAD_COUNT = 18; // snake body segments
-const BEAD_DELAY = 0.026; // seconds between body segments
+const BEAD_DELAY = 0.05; // seconds between body segments
 const SNAKE_PATH_ID = "snake-path";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -38,6 +38,9 @@ const THEMES = {
     levels: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
     snake: ["#0ea5e9", "#3b82f6", "#6366f1"],
     eye: "#ffffff",
+    mascot: "#0284c7",
+    mascotFace: "#f8fafc",
+    mascotEye: "#0b1220",
     title: "GitHub contribution snake (light)",
   },
   dark: {
@@ -46,6 +49,9 @@ const THEMES = {
     levels: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
     snake: ["#a5f3fc", "#38bdf8", "#818cf8"],
     eye: "#0b1220",
+    mascot: "#38bdf8",
+    mascotFace: "#e0f2fe",
+    mascotEye: "#0b1220",
     title: "GitHub contribution snake (dark)",
   },
 };
@@ -249,7 +255,11 @@ function buildSvg(themeName, weeks) {
     }
   }
 
-  /* Month labels */
+  /* Month labels (keep the top-right corner free for the mascot). */
+  const mascotSize = 26;
+  const mascotX = width - MARGIN.right - mascotSize;
+  const mascotY = 1;
+  const labelRightLimit = mascotX - 6;
   const labels = [];
   let lastMonth = -1;
   let lastLabelX = Number.NEGATIVE_INFINITY;
@@ -261,7 +271,7 @@ function buildSvg(themeName, weeks) {
     if (month === lastMonth) continue;
 
     const x = cellX(col);
-    if (x - lastLabelX >= 30 && x + 26 <= width - MARGIN.right) {
+    if (x - lastLabelX >= 30 && x + 26 <= labelRightLimit) {
       labels.push(`<text x="${fmt(x)}" y="${MARGIN.top - 14}">${MONTHS[month]}</text>`);
       lastLabelX = x;
     }
@@ -311,15 +321,46 @@ function buildSvg(themeName, weeks) {
     }
   }
 
+  /* Octokit mascot: sits above the graph and watches the snake. */
+  const mascot = `<g transform="translate(${fmt(mascotX)} ${mascotY})" aria-hidden="true">
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 0; 0 -1.6; 0 0" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" dur="4s" repeatCount="indefinite"/>
+    <path d="M5.6 7.6 L4.6 2.9 Q4.4 2.2 5.1 2.4 L9.1 4.6 Z" fill="${theme.mascot}"/>
+    <path d="M20.4 7.6 L21.4 2.9 Q21.6 2.2 20.9 2.4 L16.9 4.6 Z" fill="${theme.mascot}"/>
+    <path d="M13 3.2 C7 3.2 3.2 7.4 3.2 13 C3.2 18.7 7.2 21.6 13 21.6 C18.8 21.6 22.8 18.7 22.8 13 C22.8 7.4 19 3.2 13 3.2 Z" fill="${theme.mascot}"/>
+    <ellipse cx="13" cy="13.6" rx="6.4" ry="5.2" fill="${theme.mascotFace}"/>
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="-0.65 0; 0.65 0; -0.65 0" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" dur="7s" repeatCount="indefinite"/>
+      <ellipse cx="10.4" cy="12.6" rx="1.05" ry="1.45" fill="${theme.mascotEye}">
+        <animate attributeName="ry" values="1.45;1.45;0.2;1.45" keyTimes="0;0.9;0.94;1" dur="5.4s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="15.6" cy="12.6" rx="1.05" ry="1.45" fill="${theme.mascotEye}">
+        <animate attributeName="ry" values="1.45;1.45;0.2;1.45" keyTimes="0;0.9;0.94;1" dur="5.4s" repeatCount="indefinite"/>
+      </ellipse>
+    </g>
+    <path d="M12.2 15.4 Q13 16.2 13.8 15.4" fill="none" stroke="${theme.mascotEye}" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M8.6 21.2 q-1.6 1.7 0.1 2.6" fill="none" stroke="${theme.mascot}" stroke-width="1.7" stroke-linecap="round"/>
+    <path d="M13 21.6 v2.1" fill="none" stroke="${theme.mascot}" stroke-width="1.7" stroke-linecap="round"/>
+    <path d="M17.4 21.2 q1.6 1.7 -0.1 2.6" fill="none" stroke="${theme.mascot}" stroke-width="1.7" stroke-linecap="round"/>
+  </g>
+</g>`;
+
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="snake-title snake-desc">
 <title id="snake-title">${theme.title}</title>
-<desc id="snake-desc">An animated snake travelling through a GitHub contribution graph and eating the contribution squares.</desc>
+<desc id="snake-desc">An animated snake travelling through a GitHub contribution graph and eating the contribution squares, while an Octokit mascot watches from above.</desc>
 <style>
-  .e { animation: snake-eat ${duration.toFixed(2)}s linear infinite; }
+  .e {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: snake-eat ${duration.toFixed(2)}s linear infinite;
+  }
   @keyframes snake-eat {
-    0%, 2% { opacity: 1; }
-    7%, 96% { opacity: 0; }
-    100% { opacity: 1; }
+    0%    { opacity: 1; transform: scale(1); }
+    0.5%  { opacity: 1; transform: scale(1); }
+    1.1%  { opacity: 1; transform: scale(1.2); }
+    2.1%  { opacity: 0; transform: scale(0.25); }
+    97.5% { opacity: 0; transform: scale(0.25); }
+    100%  { opacity: 1; transform: scale(1); }
   }
   text {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
@@ -351,6 +392,7 @@ ${eatenCells.join("\n")}
 <g filter="url(#snake-glow)">
 ${beads.join("\n")}
 </g>
+${mascot}
 </svg>
 `;
 }
