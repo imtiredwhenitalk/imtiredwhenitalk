@@ -22,12 +22,15 @@ const CELL = 10;
 const GAP = 3;
 const PITCH = CELL + GAP;
 const ROWS = 7;
-const MARGIN = { top: 36, right: 16, bottom: 16, left: 48 };
+const MARGIN = { top: 128, right: 16, bottom: 16, left: 48 };
 
-const SNAKE_SPEED = 140; // px per second
+const SNAKE_SPEED = 110; // px per second
 const BEAD_COUNT = 18; // snake body segments
 const BEAD_DELAY = 0.05; // seconds between body segments
 const SNAKE_PATH_ID = "snake-path";
+const OCTO_SIZE = 108;
+const OCTO_BODY_PATH =
+  "M50 4 C72 4 90 21 90 45 C90 66 74 82 50 82 C26 82 10 66 10 45 C10 21 28 4 50 4 Z";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -38,9 +41,19 @@ const THEMES = {
     levels: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
     snake: ["#0ea5e9", "#3b82f6", "#6366f1"],
     eye: "#ffffff",
-    mascot: "#0284c7",
-    mascotFace: "#f8fafc",
-    mascotEye: "#0b1220",
+    accent: "#0284c7",
+    panel: { fill: "#f6f8fa", stroke: "#d0d7de" },
+    octo: {
+      body: ["#ddd6fe", "#8b5cf6", "#5b21b6"],
+      tentacle: ["#a78bfa", "#6d28d9"],
+      eye: "#ffffff",
+      iris: "#0891b2",
+      pupil: "#1e1b4b",
+      mouth: "#4c1d95",
+      blush: "#f472b6",
+      halo: "#8b5cf6",
+      shadow: "#4c1d95",
+    },
     title: "GitHub contribution snake (light)",
   },
   dark: {
@@ -49,9 +62,19 @@ const THEMES = {
     levels: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
     snake: ["#a5f3fc", "#38bdf8", "#818cf8"],
     eye: "#0b1220",
-    mascot: "#38bdf8",
-    mascotFace: "#e0f2fe",
-    mascotEye: "#0b1220",
+    accent: "#38bdf8",
+    panel: { fill: "#161b22", stroke: "#30363d" },
+    octo: {
+      body: ["#c4b5fd", "#8b5cf6", "#4c1d95"],
+      tentacle: ["#a78bfa", "#5b21b6"],
+      eye: "#ffffff",
+      iris: "#22d3ee",
+      pupil: "#140b2e",
+      mouth: "#3b0764",
+      blush: "#f472b6",
+      halo: "#8b5cf6",
+      shadow: "#000000",
+    },
     title: "GitHub contribution snake (dark)",
   },
 };
@@ -92,6 +115,107 @@ function sampleColor(stops, t) {
   const position = clamped * (stops.length - 1);
   const index = Math.min(Math.floor(position), stops.length - 2);
   return mixColors(stops[index], stops[index + 1], position - index);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Octopus mascot                                                             */
+/* -------------------------------------------------------------------------- */
+
+function buildOctopus(theme, x, y) {
+  const o = theme.octo;
+
+  const tentacle = (d, px, py, amplitude, dur, opacity) => {
+    const values = `${-amplitude} ${px} ${py};${amplitude} ${px} ${py};${-amplitude} ${px} ${py}`;
+    return `<path d="${d}" fill="none" stroke="url(#octo-tentacle)" stroke-width="10" stroke-linecap="round" opacity="${opacity}">
+      <animateTransform attributeName="transform" type="rotate" values="${values}" keyTimes="0;0.5;1" dur="${dur}s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>
+    </path>`;
+  };
+
+  const eye = (cx) => `<g transform="translate(${cx} 45)">
+    <g>
+      <animateTransform attributeName="transform" type="scale" values="1 1;1 1;1 0.08;1 1" keyTimes="0;0.93;0.965;1" dur="6.4s" repeatCount="indefinite"/>
+      <ellipse rx="11.5" ry="12.5" fill="${o.eye}"/>
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="-2.5 0.6;2.5 0.6;-2.5 0.6" keyTimes="0;0.5;1" dur="9s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/>
+        <circle cx="-1.5" cy="2.5" r="6" fill="${o.iris}"/>
+        <circle cx="-1.5" cy="2.5" r="3.2" fill="${o.pupil}"/>
+        <circle cx="-3.2" cy="0.6" r="1.8" fill="#ffffff" opacity="0.9"/>
+      </g>
+    </g>
+  </g>`;
+
+  return `<g transform="translate(${fmt(x)} ${fmt(y)})" aria-hidden="true">
+  <ellipse cx="50" cy="48" rx="52" ry="50" fill="url(#octo-halo)"/>
+  <ellipse cx="50" cy="98" rx="30" ry="4.5" fill="${o.shadow}" opacity="0.25"/>
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 0;0 -2.2;0 0" keyTimes="0;0.5;1" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    ${tentacle("M22 68 C15 71 8 74 5 82", 22, 68, 5, 7, 0.7)}
+    ${tentacle("M78 68 C85 71 92 74 95 82", 78, 68, -5, 7.4, 0.7)}
+    ${tentacle("M30 72 C22 78 13 82 10 90 C8 96 14 99 19 94", 30, 72, 4, 6.2, 0.9)}
+    ${tentacle("M70 72 C78 78 87 82 90 90 C92 96 86 99 81 94", 70, 72, -4, 6.6, 0.9)}
+    ${tentacle("M41 80 C36 87 29 91 27 98 C26 103 32 104 35 99", 41, 80, 3.5, 5.4, 1)}
+    ${tentacle("M59 80 C64 87 71 91 73 98 C74 103 68 104 65 99", 59, 80, -3.5, 5.8, 1)}
+    ${tentacle("M50 82 C49 89 45 93 45 99 C45 103 50 104 52 100", 50, 82, 3, 4.8, 1)}
+    <path d="${OCTO_BODY_PATH}" fill="url(#octo-body)"/>
+    <g clip-path="url(#octo-body-clip)">
+      <ellipse cx="50" cy="88" rx="44" ry="20" fill="${o.body[2]}" opacity="0.5"/>
+    </g>
+    <path d="M68 10 C81 16 89 29 90 43" fill="none" stroke="${o.body[0]}" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <ellipse cx="33" cy="22" rx="14" ry="9" fill="url(#octo-shine)" transform="rotate(-28 33 22)"/>
+    <ellipse cx="43" cy="13" rx="5.5" ry="3.5" fill="#ffffff" opacity="0.35" transform="rotate(-28 43 13)"/>
+    ${eye(35)}
+    ${eye(65)}
+    <ellipse cx="22" cy="57" rx="5" ry="3" fill="${o.blush}" opacity="0.35"/>
+    <ellipse cx="78" cy="57" rx="5" ry="3" fill="${o.blush}" opacity="0.35"/>
+    <path d="M45 60 Q50 66 55 60" fill="none" stroke="${o.mouth}" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+</g>`;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Score panel                                                                */
+/* -------------------------------------------------------------------------- */
+
+function buildScorePanel(theme, x, y, duration, keyTimes, scores, total) {
+  const digitHeight = 30;
+  const places = Math.max(3, String(total).length);
+  const slot = (place) => 14 + (places - 1 - place) * 20;
+  const centers = Array.from({ length: places }, (_, place) => slot(place) + 10);
+  const clipX = Array.from({ length: places }, (_, place) => slot(place));
+  const totalX = 14 + places * 20 + 14;
+  const panelWidth = 168 + (places - 3) * 20;
+  const keyTimesAttr =
+    keyTimes.length > 1 ? ` keyTimes="${keyTimes.map((t) => t.toFixed(6)).join(";")}"` : "";
+
+  const defs = clipX
+    .map(
+      (cx, index) =>
+        `<clipPath id="score-clip-${index}"><rect x="${cx}" y="27" width="20" height="30"/></clipPath>`,
+    )
+    .join("\n");
+
+  const digits = Array.from({ length: places }, (_, place) => {
+    const values = scores
+      .map((score) => `0 ${-((Math.floor(score / 10 ** place) % 10) * digitHeight)}`)
+      .join(";");
+    const strip = Array.from(
+      { length: 10 },
+      (_, digit) =>
+        `<text x="${centers[place]}" y="${50 + digit * digitHeight}" text-anchor="middle" style="font-size:26px;font-weight:700">${digit}</text>`,
+    ).join("");
+    return `<g clip-path="url(#score-clip-${place})"><g><animateTransform attributeName="transform" type="translate" values="${values}"${keyTimesAttr} calcMode="discrete" dur="${duration.toFixed(3)}s" repeatCount="indefinite"/>${strip}</g></g>`;
+  }).join("\n");
+
+  const markup = `<g transform="translate(${fmt(x)} ${fmt(y)})">
+  <rect x="0" y="0" width="${panelWidth}" height="58" rx="14" fill="${theme.panel.fill}" stroke="${theme.panel.stroke}"/>
+  <text x="14" y="19" fill="${theme.label}" style="font-size:7.5px;letter-spacing:0.14em">COMMITS EATEN</text>
+  <g fill="${theme.accent}">
+${digits}
+  </g>
+  <text x="${totalX}" y="49" fill="${theme.label}" style="font-size:11px">of ${total}</text>
+</g>`;
+
+  return { defs, markup };
 }
 
 /* -------------------------------------------------------------------------- */
@@ -202,7 +326,7 @@ function buildSvg(themeName, weeks) {
   const routeBottom = MARGIN.top + gridHeight + 8;
   const routeTop = 10;
   const routeLeft = 10;
-  const descentX = MARGIN.left - 6;
+  const descentX = MARGIN.left - 10;
   const returnPoints = [
     [endX, endY],
     [endX, routeBottom],
@@ -232,7 +356,11 @@ function buildSvg(themeName, weeks) {
     path += ` L ${fmt(returnPoints[index][0])} ${fmt(returnPoints[index][1])}`;
   }
 
-  /* Cells */
+  /* Cells: each contribution disappears when the worm reaches it, then all
+     cells reappear together once the worm is back at the start. */
+  const cellFade = 0.55 / duration;
+  const eatLead = 0.2 / duration;
+  const resetAt = 0.99;
   const baseCells = [];
   const eatenCells = [];
   for (let col = 0; col < cols; col += 1) {
@@ -247,19 +375,37 @@ function buildSvg(themeName, weeks) {
       if (!day || day.count <= 0) continue;
 
       const level = levelFor(day.count);
-      const delay = (distanceTo.get(key(col, row)) / totalLength) * duration;
+      const t = distanceTo.get(key(col, row)) / totalLength;
+      const start = Math.max(0.0008, t - eatLead);
+      const end = Math.min(resetAt - 0.005, start + cellFade);
       eatenCells.push(
-        `<rect class="e" x="${x}" y="${y}" width="${CELL}" height="${CELL}" rx="2" ` +
-          `fill="${theme.levels[level]}" style="animation-delay:${delay.toFixed(2)}s"/>`,
+        `<rect x="${x}" y="${y}" width="${CELL}" height="${CELL}" rx="2" fill="${theme.levels[level]}">` +
+          `<animate attributeName="opacity" dur="${duration.toFixed(3)}s" repeatCount="indefinite" ` +
+          `values="1;1;0;0;1" keyTimes="0;${start.toFixed(5)};${end.toFixed(5)};${resetAt};1"/>` +
+          `</rect>`,
       );
     }
   }
 
-  /* Month labels (keep the top-right corner free for the mascot). */
-  const mascotSize = 26;
-  const mascotX = width - MARGIN.right - mascotSize;
-  const mascotY = 1;
-  const labelRightLimit = mascotX - 6;
+  /* Score: one point per eaten contribution. */
+  const scored = [];
+  for (const cell of route) {
+    const day = weeks[cell.col][cell.row];
+    if (day && day.count > 0) scored.push(distanceTo.get(key(cell.col, cell.row)) / totalLength);
+  }
+  const scoreEvents = scored.map((t, index) => ({ t, score: index + 1 }));
+  let initialScore = 0;
+  if (scoreEvents.length > 0 && scoreEvents[0].t < 0.001) {
+    initialScore = scoreEvents[0].score;
+    scoreEvents.shift();
+  }
+  const scoreKeyTimes = [0, ...scoreEvents.map((event) => event.t)];
+  const scoreValues = [initialScore, ...scoreEvents.map((event) => event.score)];
+
+  /* Month labels sit just below the octopus. */
+  const octoX = width - MARGIN.right - OCTO_SIZE;
+  const octoY = 0;
+  const labelRightLimit = width - MARGIN.right;
   const labels = [];
   let lastMonth = -1;
   let lastLabelX = Number.NEGATIVE_INFINITY;
@@ -321,47 +467,22 @@ function buildSvg(themeName, weeks) {
     }
   }
 
-  /* Octokit mascot: sits above the graph and watches the snake. */
-  const mascot = `<g transform="translate(${fmt(mascotX)} ${mascotY})" aria-hidden="true">
-  <g>
-    <animateTransform attributeName="transform" type="translate" values="0 0; 0 -1.6; 0 0" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" dur="4s" repeatCount="indefinite"/>
-    <path d="M5.6 7.6 L4.6 2.9 Q4.4 2.2 5.1 2.4 L9.1 4.6 Z" fill="${theme.mascot}"/>
-    <path d="M20.4 7.6 L21.4 2.9 Q21.6 2.2 20.9 2.4 L16.9 4.6 Z" fill="${theme.mascot}"/>
-    <path d="M13 3.2 C7 3.2 3.2 7.4 3.2 13 C3.2 18.7 7.2 21.6 13 21.6 C18.8 21.6 22.8 18.7 22.8 13 C22.8 7.4 19 3.2 13 3.2 Z" fill="${theme.mascot}"/>
-    <ellipse cx="13" cy="13.6" rx="6.4" ry="5.2" fill="${theme.mascotFace}"/>
-    <g>
-      <animateTransform attributeName="transform" type="translate" values="-0.65 0; 0.65 0; -0.65 0" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" dur="7s" repeatCount="indefinite"/>
-      <ellipse cx="10.4" cy="12.6" rx="1.05" ry="1.45" fill="${theme.mascotEye}">
-        <animate attributeName="ry" values="1.45;1.45;0.2;1.45" keyTimes="0;0.9;0.94;1" dur="5.4s" repeatCount="indefinite"/>
-      </ellipse>
-      <ellipse cx="15.6" cy="12.6" rx="1.05" ry="1.45" fill="${theme.mascotEye}">
-        <animate attributeName="ry" values="1.45;1.45;0.2;1.45" keyTimes="0;0.9;0.94;1" dur="5.4s" repeatCount="indefinite"/>
-      </ellipse>
-    </g>
-    <path d="M12.2 15.4 Q13 16.2 13.8 15.4" fill="none" stroke="${theme.mascotEye}" stroke-width="0.9" stroke-linecap="round"/>
-    <path d="M8.6 21.2 q-1.6 1.7 0.1 2.6" fill="none" stroke="${theme.mascot}" stroke-width="1.7" stroke-linecap="round"/>
-    <path d="M13 21.6 v2.1" fill="none" stroke="${theme.mascot}" stroke-width="1.7" stroke-linecap="round"/>
-    <path d="M17.4 21.2 q1.6 1.7 -0.1 2.6" fill="none" stroke="${theme.mascot}" stroke-width="1.7" stroke-linecap="round"/>
-  </g>
-</g>`;
+  /* Giant octopus watching the worm, plus the score panel. */
+  const octopus = buildOctopus(theme, octoX, octoY);
+  const scorePanel = buildScorePanel(
+    theme,
+    MARGIN.left,
+    21,
+    duration,
+    scoreKeyTimes,
+    scoreValues,
+    scored.length,
+  );
 
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="snake-title snake-desc">
 <title id="snake-title">${theme.title}</title>
-<desc id="snake-desc">An animated snake travelling through a GitHub contribution graph and eating the contribution squares, while an Octokit mascot watches from above.</desc>
+<desc id="snake-desc">A slow animated worm travelling through a GitHub contribution graph and eating the contribution squares, one point per commit, while a giant 3D octopus watches from above.</desc>
 <style>
-  .e {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: snake-eat ${duration.toFixed(2)}s linear infinite;
-  }
-  @keyframes snake-eat {
-    0%    { opacity: 1; transform: scale(1); }
-    0.5%  { opacity: 1; transform: scale(1); }
-    1.1%  { opacity: 1; transform: scale(1.2); }
-    2.1%  { opacity: 0; transform: scale(0.25); }
-    97.5% { opacity: 0; transform: scale(0.25); }
-    100%  { opacity: 1; transform: scale(1); }
-  }
   text {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
     font-size: 9.5px;
@@ -377,6 +498,28 @@ function buildSvg(themeName, weeks) {
       <feMergeNode in="SourceGraphic"/>
     </feMerge>
   </filter>
+  <radialGradient id="octo-body" cx="38%" cy="26%" r="78%">
+    <stop offset="0%" stop-color="${theme.octo.body[0]}"/>
+    <stop offset="52%" stop-color="${theme.octo.body[1]}"/>
+    <stop offset="100%" stop-color="${theme.octo.body[2]}"/>
+  </radialGradient>
+  <linearGradient id="octo-tentacle" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="${theme.octo.tentacle[0]}"/>
+    <stop offset="100%" stop-color="${theme.octo.tentacle[1]}"/>
+  </linearGradient>
+  <radialGradient id="octo-halo" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="${theme.octo.halo}" stop-opacity="0.28"/>
+    <stop offset="62%" stop-color="${theme.octo.halo}" stop-opacity="0.1"/>
+    <stop offset="100%" stop-color="${theme.octo.halo}" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="octo-shine" x1="0" y1="0" x2="0.4" y2="1">
+    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+    <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+  </linearGradient>
+  <clipPath id="octo-body-clip">
+    <path d="${OCTO_BODY_PATH}"/>
+  </clipPath>
+${scorePanel.defs}
 </defs>
 <g fill="${theme.label}">
 ${labels.join("\n")}
@@ -392,7 +535,8 @@ ${eatenCells.join("\n")}
 <g filter="url(#snake-glow)">
 ${beads.join("\n")}
 </g>
-${mascot}
+${octopus}
+${scorePanel.markup}
 </svg>
 `;
 }
